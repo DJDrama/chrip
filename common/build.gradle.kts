@@ -11,11 +11,10 @@ repositories {
 }
 
 dependencies {
-    testImplementation(kotlin("test"))
-}
+    api(libs.kotlin.reflect)
+    api(libs.jackson.module.kotlin)
 
-kotlin {
-    jvmToolchain(21)
+    testImplementation(kotlin("test"))
 }
 
 tasks.test {
