@@ -2,7 +2,6 @@ import org.gradle.kotlin.dsl.dependencies
 
 plugins {
     id("chrip.kotlin-common")
-    id("org.springframework.boot")
     id("io.spring.dependency-management")
 }
 

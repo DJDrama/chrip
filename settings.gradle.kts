@@ -4,6 +4,8 @@ pluginManagement {
     includeBuild("build-logic")
 }
 
+enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
+
 // Modules
 include("app")
 include("user")
