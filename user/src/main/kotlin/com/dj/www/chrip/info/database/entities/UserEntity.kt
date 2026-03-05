@@ -1,6 +1,6 @@
-package com.dj.www.user.info.database.entities
+package com.dj.www.chrip.info.database.entities
 
-import com.dj.www.user.domain.model.UserId
+import com.dj.www.chrip.domain.model.UserId
 import jakarta.persistence.*
 import org.hibernate.annotations.CreationTimestamp
 import org.hibernate.annotations.UpdateTimestamp
