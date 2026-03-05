@@ -1,4 +1,4 @@
-package com.dj.www.user.domain.model
+package com.dj.www.chrip.domain.model
 
 import java.util.UUID
 
