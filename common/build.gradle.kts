@@ -1,7 +1,6 @@
 plugins {
     id("java-library")
     id("chrip.kotlin-common")
-    id("org.springframework.boot")
 }
 
 group = "com.dj.www"
