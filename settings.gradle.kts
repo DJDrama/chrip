@@ -1,5 +1,9 @@
 rootProject.name = "chrip"
 
+pluginManagement {
+    includeBuild("build-logic")
+}
+
 // Modules
 include("app")
 include("user")
