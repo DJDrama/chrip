@@ -1,4 +1,4 @@
-package com.dj.www.chrip.info.database.entities
+package com.dj.www.chrip.infra.database.entities
 
 import com.dj.www.chrip.domain.model.UserId
 import jakarta.persistence.*
