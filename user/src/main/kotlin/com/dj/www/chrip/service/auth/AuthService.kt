@@ -1,9 +1,6 @@
 package com.dj.www.chrip.service.auth
 
-import com.dj.www.chrip.domain.exception.InvalidCredentialsException
-import com.dj.www.chrip.domain.exception.InvalidTokenException
-import com.dj.www.chrip.domain.exception.UserAlreadyExistsException
-import com.dj.www.chrip.domain.exception.UserNotFoundException
+import com.dj.www.chrip.domain.exception.*
 import com.dj.www.chrip.domain.model.AuthenticatedUser
 import com.dj.www.chrip.domain.model.User
 import com.dj.www.chrip.domain.model.UserId
@@ -25,25 +22,29 @@ class AuthService(
     private val userRepository: UserRepository,
     private val passwordEncoder: PasswordEncoder,
     private val jwtService: JwtService,
-    private val refreshTokenRepository: RefreshTokenRepository
+    private val refreshTokenRepository: RefreshTokenRepository,
+    private val emailVerificationService: EmailVerificationService
 ) {
 
+    @Transactional
     fun register(email: String, username: String, password: String): User {
+        val trimmedEmail = email.trim()
         val user = userRepository.findByEmailOrUsername(
-            email = email.trim(),
+            email = trimmedEmail,
             username = username.trim()
         )
         if (user != null) {
             throw UserAlreadyExistsException()
         }
-        val savedUser = userRepository.save(
+
+        val savedUser = userRepository.saveAndFlush(
             UserEntity(
-                email = email.trim(),
+                email = trimmedEmail,
                 username = username.trim(),
                 hashedPassword = passwordEncoder.encode(rawPassword = password)
             )
         ).toUser()
-
+        val token = emailVerificationService.createVerificationToken(email = trimmedEmail)
         return savedUser
     }
 
@@ -57,7 +58,9 @@ class AuthService(
             throw InvalidCredentialsException()
         }
 
-        // TODO: Check for verified Email
+        if (!user.hasVerifiedEmail) {
+            throw EmailNotVerifiedException()
+        }
 
         return user.id?.let { userId ->
             val accessToken = jwtService.generateAccessToken(userId = userId)
