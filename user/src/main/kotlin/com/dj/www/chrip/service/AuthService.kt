@@ -10,6 +10,7 @@ import com.dj.www.chrip.infra.database.mappers.toUser
 import com.dj.www.chrip.infra.security.PasswordEncoder
 import com.dj.www.chrip.repositories.RefreshTokenRepository
 import com.dj.www.chrip.repositories.UserRepository
+import com.dj.www.chrip.service.EmailVerificationService
 import jakarta.transaction.Transactional
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service

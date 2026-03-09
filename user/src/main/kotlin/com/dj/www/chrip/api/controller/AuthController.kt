@@ -3,9 +3,10 @@ package com.dj.www.chrip.api.controller
 import com.dj.www.chrip.api.dto.*
 import com.dj.www.chrip.api.mappers.toAuthenticatedUserDto
 import com.dj.www.chrip.api.mappers.toUserDto
+import com.dj.www.chrip.infra.rate_limiting.EmailRateLimiter
+import com.dj.www.chrip.service.EmailVerificationService
 import com.dj.www.chrip.service.PasswordResetService
 import com.dj.www.chrip.service.auth.AuthService
-import com.dj.www.chrip.service.auth.EmailVerificationService
 import jakarta.validation.Valid
 import org.springframework.web.bind.annotation.*
 
@@ -14,7 +15,8 @@ import org.springframework.web.bind.annotation.*
 class AuthController(
     private val authService: AuthService,
     private val emailVerificationService: EmailVerificationService,
-    private val passwordResetService: PasswordResetService
+    private val passwordResetService: PasswordResetService,
+    private val emailRateLimiter: EmailRateLimiter
 ) {
 
     @PostMapping("/register")
@@ -87,4 +89,12 @@ class AuthController(
         )*/
     }
 
+    @PostMapping("/resend-verification")
+    fun resendVerification(
+        @Valid @RequestBody body: EmailRequest
+    ) {
+        emailRateLimiter.withRateLimit(email = body.email) {
+            emailVerificationService.resendVerificationEmail(email = body.email)
+        }
+    }
 }
