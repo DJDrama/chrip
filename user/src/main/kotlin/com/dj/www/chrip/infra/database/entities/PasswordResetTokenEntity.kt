@@ -27,6 +27,11 @@ class PasswordResetTokenEntity(
     @Column(nullable = true)
     var usedAt: Instant = Instant.now(),
     @CreationTimestamp
-    var createdAt: Instant = Instant.now(),
+    var createdAt: Instant = Instant.now()
+) {
+    val isUsed: Boolean
+        get() = usedAt != null
 
-    )
+    val isExpired: Boolean
+        get() = Instant.now() > expiresAt
+}
