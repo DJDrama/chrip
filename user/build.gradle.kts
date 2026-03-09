@@ -21,6 +21,8 @@ dependencies {
     runtimeOnly(libs.jwt.impl)
     runtimeOnly(libs.jwt.jackson)
 
+    implementation(libs.spring.boot.starter.redis)
+
     runtimeOnly(libs.postgresql)
     testImplementation(kotlin("test"))
 }
