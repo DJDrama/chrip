@@ -1,4 +1,4 @@
-package com.dj.www.chrip.service.auth
+package com.dj.www.chrip.service
 
 import com.dj.www.chrip.domain.exception.InvalidTokenException
 import com.dj.www.chrip.domain.exception.UserNotFoundException
@@ -21,6 +21,9 @@ class EmailVerificationService(
     @param:Value("\${chrip.email.verification.expiry-hours}") private val expiryHours: Long
 ) {
 
+    fun resendVerificationEmail(email: String) {
+        // TODO: trigger resend
+    }
     @Transactional
     fun createVerificationToken(email: String): EmailVerificationToken {
         val userEntity = userRepository.findByEmail(email = email) ?: throw UserNotFoundException()
