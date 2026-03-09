@@ -20,7 +20,7 @@ class JwtService(
     )
 
     private val accessTokenValidityMs = expirationMinutes * 60 * 1000L
-    val refreshTokenValidityMs = expirationMinutes * 30 * 24 * 60 * 60 * 1000L
+    val refreshTokenValidityMs = 30 * 24 * 60 * 60 * 1000L
 
     fun generateAccessToken(userId: UserId): String {
         return generateToken(
