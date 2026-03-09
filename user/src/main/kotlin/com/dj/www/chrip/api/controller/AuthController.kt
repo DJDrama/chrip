@@ -4,15 +4,16 @@ import com.dj.www.chrip.api.dto.*
 import com.dj.www.chrip.api.mappers.toAuthenticatedUserDto
 import com.dj.www.chrip.api.mappers.toUserDto
 import com.dj.www.chrip.service.auth.AuthService
+import com.dj.www.chrip.service.auth.EmailVerificationService
 import jakarta.validation.Valid
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/api/auth")
-class AuthController(private val authService: AuthService) {
+class AuthController(
+    private val authService: AuthService,
+    private val emailVerificationService: EmailVerificationService
+) {
 
     @PostMapping("/register")
     fun register(
@@ -49,5 +50,12 @@ class AuthController(private val authService: AuthService) {
         @RequestBody refreshRequest: RefreshRequest
     ) {
         authService.logout(refreshToken = refreshRequest.refreshToken)
+    }
+
+    @GetMapping("/verify")
+    fun verifyEmail(
+        @RequestParam token: String,
+    ) {
+        emailVerificationService.verifyEmail(token = token)
     }
 }
