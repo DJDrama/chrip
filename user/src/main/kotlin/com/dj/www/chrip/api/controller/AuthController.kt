@@ -1,7 +1,10 @@
 package com.dj.www.chrip.api.controller
 
+import com.dj.www.chrip.api.dto.AuthenticatedUserDto
+import com.dj.www.chrip.api.dto.LoginRequest
 import com.dj.www.chrip.api.dto.RegisterRequest
 import com.dj.www.chrip.api.dto.UserDto
+import com.dj.www.chrip.api.mappers.toAuthenticatedUserDto
 import com.dj.www.chrip.api.mappers.toUserDto
 import com.dj.www.chrip.service.auth.AuthService
 import jakarta.validation.Valid
@@ -23,5 +26,15 @@ class AuthController(private val authService: AuthService) {
             username = body.username,
             password = body.password,
         ).toUserDto()
+    }
+
+    @PostMapping("/login")
+    fun login(
+        @RequestBody body: LoginRequest
+    ): AuthenticatedUserDto {
+        return authService.login(
+            email = body.email,
+            password = body.password
+        ).toAuthenticatedUserDto()
     }
 }
