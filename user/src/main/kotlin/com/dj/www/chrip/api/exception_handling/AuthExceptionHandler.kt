@@ -56,6 +56,15 @@ class AuthExceptionHandler {
         "message" to e.message
     )
 
+    @ExceptionHandler(SamePasswordException::class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    fun onSamePassword(
+        e: SamePasswordException
+    ) = mapOf(
+        "code" to "SAME_PASSWORD",
+        "message" to e.message
+    )
+
     @ExceptionHandler(MethodArgumentNotValidException::class)
     // when some validation fails
     fun onValidationException(e: MethodArgumentNotValidException): ResponseEntity<Map<String, Any>> {
