@@ -2,3 +2,6 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update # update the schema if necessary
+
+  jwt:
+    expiration-minutes: 1000
