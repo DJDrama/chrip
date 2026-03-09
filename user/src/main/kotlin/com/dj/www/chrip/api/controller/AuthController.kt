@@ -1,9 +1,6 @@
 package com.dj.www.chrip.api.controller
 
-import com.dj.www.chrip.api.dto.AuthenticatedUserDto
-import com.dj.www.chrip.api.dto.LoginRequest
-import com.dj.www.chrip.api.dto.RegisterRequest
-import com.dj.www.chrip.api.dto.UserDto
+import com.dj.www.chrip.api.dto.*
 import com.dj.www.chrip.api.mappers.toAuthenticatedUserDto
 import com.dj.www.chrip.api.mappers.toUserDto
 import com.dj.www.chrip.service.auth.AuthService
@@ -36,5 +33,14 @@ class AuthController(private val authService: AuthService) {
             email = body.email,
             password = body.password
         ).toAuthenticatedUserDto()
+    }
+
+    @PostMapping("/refresh")
+    fun refresh(
+        @RequestBody refreshRequest: RefreshRequest
+    ): AuthenticatedUserDto {
+        return authService
+            .refresh(refreshToken = refreshRequest.refreshToken)
+            .toAuthenticatedUserDto()
     }
 }
