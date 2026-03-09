@@ -23,9 +23,9 @@ class PasswordResetTokenEntity(
     @JoinColumn(name = "user_id", nullable = false)
     var user: UserEntity,
     @Column(nullable = false)
-    var expiresAt: Instant = Instant.now(),
+    var expiresAt: Instant,
     @Column(nullable = true)
-    var usedAt: Instant = Instant.now(),
+    var usedAt: Instant? = null,
     @CreationTimestamp
     var createdAt: Instant = Instant.now()
 ) {
