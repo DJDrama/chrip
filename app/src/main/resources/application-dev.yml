@@ -12,4 +12,4 @@ nginx:
 chrip:
   rate-limit:
     ip:
-      apply-limit: true
+      apply-limit: false
