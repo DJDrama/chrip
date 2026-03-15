@@ -1,11 +1,13 @@
 package com.dj.www.chrip.service
 
+import com.dj.www.chrip.domain.events.user.UserEvent
 import com.dj.www.chrip.domain.exception.InvalidCredentialsException
 import com.dj.www.chrip.domain.exception.InvalidTokenException
 import com.dj.www.chrip.domain.exception.SamePasswordException
 import com.dj.www.chrip.domain.exception.UserNotFoundException
 import com.dj.www.chrip.domain.type.UserId
 import com.dj.www.chrip.infra.database.entities.PasswordResetTokenEntity
+import com.dj.www.chrip.infra.message_queue.EventPublisher
 import com.dj.www.chrip.infra.security.PasswordEncoder
 import com.dj.www.chrip.repositories.PasswordResetTokenRepository
 import com.dj.www.chrip.repositories.RefreshTokenRepository
@@ -25,7 +27,8 @@ class PasswordResetService(
     private val passwordEncoder: PasswordEncoder,
     @param:Value("\${chrip.email.reset-password.expiry-minutes}")
     private val expiryMinutes: Long,
-    private val refreshTokenRepository: RefreshTokenRepository
+    private val refreshTokenRepository: RefreshTokenRepository,
+    private val eventPublisher: EventPublisher
 ) {
 
     @Transactional
@@ -39,7 +42,15 @@ class PasswordResetService(
         )
         passwordResetTokenRepository.save(token)
 
-        // TODO: Inform notification service about password reset trigger to send email
+        eventPublisher.publish(
+            event = UserEvent.RequestResetPassword(
+                userId = user.id!!,
+                email = user.email,
+                username = user.username,
+                passwordResetToken = token.token,
+                expiresInMinutes = expiryMinutes
+            )
+        )
 
     }
 

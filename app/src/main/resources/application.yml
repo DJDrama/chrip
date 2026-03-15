@@ -78,6 +78,7 @@ jwt:
 
 chrip:
   email:
+    from: mail@chrip.com
     verification:
       expiry-hours: 24
     reset-password:
