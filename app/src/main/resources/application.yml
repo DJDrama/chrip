@@ -45,7 +45,7 @@ spring:
   rabbitmq:
     host: raccoon.lmq.cloudamqp.com
     password: ${RABBITMQ_PASSWORD}
-    username: ihjahdxs:ihjahdxs
+    username: ihjahdxs
     ssl:
       enabled: true
     virtual-host: ihjahdxs
