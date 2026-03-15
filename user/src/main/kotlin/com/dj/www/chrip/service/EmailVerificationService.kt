@@ -1,10 +1,12 @@
 package com.dj.www.chrip.service
 
+import com.dj.www.chrip.domain.events.user.UserEvent
 import com.dj.www.chrip.domain.exception.InvalidTokenException
 import com.dj.www.chrip.domain.exception.UserNotFoundException
 import com.dj.www.chrip.domain.model.EmailVerificationToken
 import com.dj.www.chrip.infra.database.entities.EmailVerificationTokenEntity
 import com.dj.www.chrip.infra.database.mappers.toEmailVerificationToken
+import com.dj.www.chrip.infra.message_queue.EventPublisher
 import com.dj.www.chrip.repositories.EmailVerificationTokenRepository
 import com.dj.www.chrip.repositories.UserRepository
 import jakarta.transaction.Transactional
@@ -18,12 +20,26 @@ import java.time.temporal.ChronoUnit
 class EmailVerificationService(
     private val emailVerificationTokenRepository: EmailVerificationTokenRepository,
     private val userRepository: UserRepository,
-    @param:Value("\${chrip.email.verification.expiry-hours}") private val expiryHours: Long
+    @param:Value("\${chrip.email.verification.expiry-hours}") private val expiryHours: Long,
+    private val eventPublisher: EventPublisher
 ) {
 
+    @Transactional
     fun resendVerificationEmail(email: String) {
-        // TODO: trigger resend
+        val token = createVerificationToken(email)
+        if (token.user.hasEmailVerified) {
+            return
+        }
+        eventPublisher.publish(
+            event = UserEvent.RequestResendVerification(
+                userId = token.user.id,
+                email = token.user.email,
+                username = token.user.username,
+                verificationToken = token.token
+            )
+        )
     }
+
     @Transactional
     fun createVerificationToken(email: String): EmailVerificationToken {
         val userEntity = userRepository.findByEmail(email = email) ?: throw UserNotFoundException()

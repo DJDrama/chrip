@@ -1,5 +1,6 @@
 package com.dj.www.chrip.service.auth
 
+import com.dj.www.chrip.domain.events.user.UserEvent
 import com.dj.www.chrip.domain.exception.*
 import com.dj.www.chrip.domain.model.AuthenticatedUser
 import com.dj.www.chrip.domain.model.User
@@ -7,6 +8,7 @@ import com.dj.www.chrip.domain.type.UserId
 import com.dj.www.chrip.infra.database.entities.RefreshTokenEntity
 import com.dj.www.chrip.infra.database.entities.UserEntity
 import com.dj.www.chrip.infra.database.mappers.toUser
+import com.dj.www.chrip.infra.message_queue.EventPublisher
 import com.dj.www.chrip.infra.security.PasswordEncoder
 import com.dj.www.chrip.repositories.RefreshTokenRepository
 import com.dj.www.chrip.repositories.UserRepository
@@ -24,7 +26,8 @@ class AuthService(
     private val passwordEncoder: PasswordEncoder,
     private val jwtService: JwtService,
     private val refreshTokenRepository: RefreshTokenRepository,
-    private val emailVerificationService: EmailVerificationService
+    private val emailVerificationService: EmailVerificationService,
+    private val eventPublisher: EventPublisher
 ) {
 
     @Transactional
@@ -45,7 +48,17 @@ class AuthService(
                 hashedPassword = passwordEncoder.encode(rawPassword = password)
             )
         ).toUser()
+
         val token = emailVerificationService.createVerificationToken(email = trimmedEmail)
+        eventPublisher.publish(
+            event = UserEvent.Created(
+                userId = savedUser.id,
+                email = savedUser.email,
+                username = savedUser.username,
+                verificationToken = token.token
+            )
+        )
+
         return savedUser
     }
 
