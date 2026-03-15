@@ -2,6 +2,9 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update # update the schema if necessary
+  mail:
+    host: smtp.mailgun.org
+    username: 어@sandbox54f44f7b0b7642fc90132576cf127953.mailgun.org
 
 jwt:
   expiration-minutes: 1000
