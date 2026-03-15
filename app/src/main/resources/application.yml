@@ -42,6 +42,27 @@ spring:
         format_sql: true
         show_sql: true
 
+  rabbitmq:
+    host: raccoon.lmq.cloudamqp.com
+    password: ${RABBITMQ_PASSWORD}
+    username: ihjahdxs:ihjahdxs
+    ssl:
+      enabled: true
+    virtual-host: ihjahdxs
+    listener:
+      simple:
+        acknowledge-mode: auto # retry auto
+        concurrency: 1 # free plan
+        max-concurrency: 3
+        prefetch: 10 # max number of messages that haven't been processed
+        default-requeue-rejected: true # automatically requeue rejected messages/events
+        retry:
+          enabled: true
+          initial-interval: 1000ms # wait between re-trials
+          max-interval: 10000ms
+          max-retries: 3
+          multiplier: 2 # exponential backoff
+
 jwt:
   secret: ${JWT_SECRET_BASE64}
 
