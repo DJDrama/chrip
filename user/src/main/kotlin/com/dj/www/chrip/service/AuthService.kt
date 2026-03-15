@@ -3,7 +3,7 @@ package com.dj.www.chrip.service.auth
 import com.dj.www.chrip.domain.exception.*
 import com.dj.www.chrip.domain.model.AuthenticatedUser
 import com.dj.www.chrip.domain.model.User
-import com.dj.www.chrip.domain.model.UserId
+import com.dj.www.chrip.domain.type.UserId
 import com.dj.www.chrip.infra.database.entities.RefreshTokenEntity
 import com.dj.www.chrip.infra.database.entities.UserEntity
 import com.dj.www.chrip.infra.database.mappers.toUser
