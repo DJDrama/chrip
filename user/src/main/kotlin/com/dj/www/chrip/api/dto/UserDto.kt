@@ -1,6 +1,6 @@
 package com.dj.www.chrip.api.dto
 
-import com.dj.www.chrip.domain.model.UserId
+import com.dj.www.chrip.domain.type.UserId
 
 data class UserDto(
     val id: UserId,

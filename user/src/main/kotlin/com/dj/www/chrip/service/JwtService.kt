@@ -1,7 +1,7 @@
 package com.dj.www.chrip.service.auth
 
 import com.dj.www.chrip.domain.exception.InvalidTokenException
-import com.dj.www.chrip.domain.model.UserId
+import com.dj.www.chrip.domain.type.UserId
 import io.jsonwebtoken.Claims
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.security.Keys

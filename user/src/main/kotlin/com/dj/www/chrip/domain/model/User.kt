@@ -1,8 +1,7 @@
 package com.dj.www.chrip.domain.model
 
-import java.util.UUID
+import com.dj.www.chrip.domain.type.UserId
 
-typealias UserId = UUID
 
 data class User(
     val id: UserId,

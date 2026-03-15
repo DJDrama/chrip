@@ -4,7 +4,7 @@ import com.dj.www.chrip.domain.exception.InvalidCredentialsException
 import com.dj.www.chrip.domain.exception.InvalidTokenException
 import com.dj.www.chrip.domain.exception.SamePasswordException
 import com.dj.www.chrip.domain.exception.UserNotFoundException
-import com.dj.www.chrip.domain.model.UserId
+import com.dj.www.chrip.domain.type.UserId
 import com.dj.www.chrip.infra.database.entities.PasswordResetTokenEntity
 import com.dj.www.chrip.infra.security.PasswordEncoder
 import com.dj.www.chrip.repositories.PasswordResetTokenRepository

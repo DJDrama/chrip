@@ -1,7 +1,7 @@
 package com.dj.www.chrip.api.util
 
 import com.dj.www.chrip.domain.exception.UnauthorizedException
-import com.dj.www.chrip.domain.model.UserId
+import com.dj.www.chrip.domain.type.UserId
 import org.springframework.security.core.context.SecurityContextHolder
 
 val requestUserId: UserId
