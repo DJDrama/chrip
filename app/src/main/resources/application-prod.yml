@@ -13,6 +13,8 @@ nginx:
   required-proxy: true
 
 chrip:
+  email:
+    url: "https://"
   rate-limit:
     ip:
       apply-limit: true

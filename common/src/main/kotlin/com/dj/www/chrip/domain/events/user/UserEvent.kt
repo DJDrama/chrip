@@ -17,14 +17,14 @@ sealed class UserEvent(
         val username: String,
         val verificationToken: String,
         override val eventKey: String = UserEventConstants.USER_CREATED_KEY
-    ) : UserEvent()
+    ) : UserEvent(), ChripEvent
 
     data class Verified(
         val userId: UserId,
         val email: String,
         val username: String,
         override val eventKey: String = UserEventConstants.USER_VERIFIED
-    ) : UserEvent()
+    ) : UserEvent(), ChripEvent
 
     data class RequestResendVerification(
         val userId: UserId,
@@ -32,14 +32,14 @@ sealed class UserEvent(
         val username: String,
         val verificationToken: String,
         override val eventKey: String = UserEventConstants.USER_REQUEST_RESEND_VERIFICATION
-    ) : UserEvent()
+    ) : UserEvent(), ChripEvent
 
     data class RequestResetPassword(
         val userId: UserId,
         val email: String,
         val username: String,
-        val verificationToken: String,
+        val passwordResetToken: String,
         val expiresInMinutes: Long,
         override val eventKey: String = UserEventConstants.USER_REQUEST_RESET_PASSWORD
-    ) : UserEvent()
+    ) : UserEvent(), ChripEvent
 }
