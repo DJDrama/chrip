@@ -1,4 +1,4 @@
-package com.dj.www.chrip.infra.service
+package com.dj.www.chrip.service
 
 import com.dj.www.chrip.domain.exception.ChatParticipantNotFoundException
 import com.dj.www.chrip.domain.exception.InvalidChatSizeException
