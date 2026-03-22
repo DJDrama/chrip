@@ -3,6 +3,7 @@
 package com.dj.www.chrip.infra.message_queue
 
 import com.dj.www.chrip.domain.events.ChripEvent
+import com.dj.www.chrip.domain.events.chat.ChatEventConstants
 import com.dj.www.chrip.domain.events.user.UserEventConstants
 import org.springframework.amqp.core.Binding
 import org.springframework.amqp.core.BindingBuilder
@@ -60,6 +61,13 @@ class RabbitMqConfig {
         false
     )
 
+    @Bean
+    fun chatExchange() = TopicExchange(
+        ChatEventConstants.CHAT_EXCHANGE,
+        true,
+        false
+    )
+
 //    @Bean
 //    fun rabbitListenerContainerFactory(
 //        connectionFactory: ConnectionFactory,
@@ -73,10 +81,27 @@ class RabbitMqConfig {
 //    }
 
     @Bean
+    fun chatUserEventsQueue() = Queue(
+        MessageQueues.CHAT_USER_EVENTS,
+        true
+    )
+
+    @Bean
     fun notificationUserEventsQueue() = Queue(
         MessageQueues.NOTIFICATION_USER_EVENTS,
         true
     )
+
+    @Bean
+    fun chatUserEventsBinding(
+        chatUserEventsQueue: Queue,
+        userExchange: TopicExchange
+    ): Binding {
+        return BindingBuilder
+            .bind(chatUserEventsQueue)
+            .to(userExchange)
+            .with("user.*")
+    }
 
     @Bean
     fun notificationUserEventsBinding(

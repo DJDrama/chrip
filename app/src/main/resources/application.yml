@@ -13,7 +13,7 @@ spring:
 
   datasource:
     #url: jdbc:postgresql://db.lyazijzwkckdufaozdug.supabase.co:5432/postgres?sslmode=require
-    url: jdbc:postgresql://aws-1-ap-southeast-2.pooler.supabase.com:6543/postgres?user=postgres.lyazijzwkckdufaozdug&password=${POSTGRES_PASSWORD}
+    url: jdbc:postgresql://aws-1-ap-southeast-2.pooler.supabase.com:6543/postgres?prepareThreshold=0&user=postgres.lyazijzwkckdufaozdug&password=${POSTGRES_PASSWORD}
     username: postgres
     #password: ${POSTGRES_PASSWORD}
     driver-class-name: org.postgresql.Driver
