@@ -4,7 +4,7 @@ import com.dj.www.chrip.api.dto.ChatDto
 import com.dj.www.chrip.api.dto.CreateChatRequest
 import com.dj.www.chrip.api.mapper.toChatDto
 import com.dj.www.chrip.api.util.requestUserId
-import com.dj.www.chrip.infra.service.ChatService
+import com.dj.www.chrip.service.ChatService
 import jakarta.validation.Valid
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
